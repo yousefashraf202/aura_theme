@@ -1,0 +1,294 @@
+<!--
+Aura Theme
+By: Yousef Ashraf
+-->
+<!DOCTYPE html>
+<html data-theme="{{ dark_theme }}"
+      data-theme-mode="{{ dark_theme }}"
+      data-aura-theme="{{ dark_theme }}"
+      dir="{{ layout_direction }}"
+      lang="{{ lang }}">
+  <head>
+    <meta name="theme-color" content="#007BFF">
+    <meta name="msapplication-navbutton-color" content="#007BFF">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#007BFF">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="author" content="Yousef Ashraf">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Aura Theme</title>
+
+    <link rel="shortcut icon"
+          href="{{ theme_settings.favicon or '/assets/aura_theme/images/datavlue-new-icon-xs.png' }}"
+          type="image/x-icon">
+    <link rel="icon"
+          href="{{ theme_settings.favicon or '/assets/aura_theme/images/datavlue-new-icon-xs.png' }}"
+          type="image/x-icon">
+
+    <!-- Google Font -->
+    <link type="text/css" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family={{ theme_settings.font_family or 'Cairo' }}:300,400,500,600,700,800,900">
+
+    {% for include in include_css -%}
+    {{ include_style(include) }}
+    {%- endfor -%}
+
+    <style>
+      /* ============================================================
+         Aura Theme — CSS custom properties injected from Theme Settings
+         ============================================================ */
+      html body {
+        font-family: "{{ theme_settings.font_family or 'Cairo' }}", sans-serif;
+
+        {% if is_custom_color and custom_color %}
+        /* Custom color mode — inject directly from hex value */
+        --aura-custom-color: {{ custom_color }};
+        --brand-color:      {{ custom_color }};
+        --primary:          {{ custom_color }};
+        --primary-hover:    {{ custom_color }};
+        --primary-color:    {{ custom_color }};
+        --btn-primary:      {{ custom_color }};
+        --border-primary:   {{ custom_color }};
+        --invert-neutral:   {{ custom_color }};
+        {% else %}
+        /* Named color mode */
+        --brand-color:    var(--{{ theme_color }}_color_style);
+        --primary:        var(--{{ theme_color }}_color_style);
+        --primary-hover:  var(--{{ theme_color }}_color_style_hover);
+        --primary-color:  var(--{{ theme_color }}_color_style);
+        --btn-primary:    var(--{{ theme_color }}_color_style);
+        --border-primary: var(--{{ theme_color }}_color_style);
+        --invert-neutral: var(--{{ theme_color }}_color_style_hover);
+        {% if dark_theme != 'dark' %}
+        --table-border-color:   var(--{{ theme_color }}-300);
+        --border-color:         #dddddd;
+        --subtle-fg:            var(--{{ theme_color }}-100);
+        --awesomplete-hover-bg: var(--{{ theme_color }}-100);
+        {% endif %}
+        {% if theme_color != 'blue' %}
+        --blue:     var(--{{ theme_color }});
+        --blue-50:  var(--{{ theme_color }}-50);
+        --blue-100: var(--{{ theme_color }}-100);
+        --blue-200: var(--{{ theme_color }}-200);
+        --blue-300: var(--{{ theme_color }}-300);
+        --blue-400: var(--{{ theme_color }}-400);
+        --blue-500: var(--{{ theme_color }}-500);
+        --blue-600: var(--{{ theme_color }}-600);
+        --blue-700: var(--{{ theme_color }}-700);
+        --blue-800: var(--{{ theme_color }}-800);
+        --blue-900: var(--{{ theme_color }}-900);
+        {% endif %}
+        --date-active-bg:    var(--{{ theme_color }}-600);
+        --checkbox-gradient: linear-gradient(180deg,
+                               var(--{{ theme_color }}_color_style) -124.51%,
+                               var(--{{ theme_color }}_color_style_hover) 100%);
+        {% endif %}
+      }
+    </style>
+  </head>
+
+  <body class="full-width aura-theme-{{ dark_theme }} {{ theme_color_on_navbar }} {{ apply_on_menu }} {{ apply_on_dashboard }} {{ apply_on_workspace }} aura-{{ theme_settings.theme_color }}-style {% if theme_settings.dark_view == '1' %}aura-dark-style{% endif %}"
+        data-theme-color="{{ theme_settings.theme_color }}"
+        data-theme-colorname="{{ theme_color }}"
+        data-custom-color="{{ custom_color }}"
+        data-close-sub-menu="{{ theme_settings.always_close_sub_menu }}"
+        data-menu-opening-type="{{ theme_settings.menu_opening_type }}"
+        data-hide-language-icon="{{ theme_settings.hide_language_icon or 0 }}"
+        data-show-help-icon="{{ theme_settings.show_help_icon or 0 }}"
+        data-font-family="{{ theme_settings.font_family or 'Cairo' }}">
+
+    <!-- Splash / Loading Screen -->
+    <div class="centered splash">
+      <img style="max-width:100px;max-height:100px;"
+           src="{{ theme_settings.loading_image or '/assets/aura_theme/images/logo-v.png' }}" />
+    </div>
+
+    <!-- Main App Wrapper -->
+    <div class="aura-app-theme main-section">
+      <header id="app-header"></header>
+      <div class="aura-content-overlay"></div>
+      <div class="aura-app-content" id="body"></div>
+      <footer id="app-footer"></footer>
+      {{ frappe.render_template('templates/side-menu.html', {}) }}
+    </div>
+
+    <!-- ============================================================
+         Aura Theme Customizer Panel (Quick Settings in Navbar)
+         ============================================================ -->
+    <div id="aura-customizer-panel" class="aura-customizer-panel" style="display:none;">
+      <div class="aura-customizer-header">
+        <span class="aura-customizer-title">
+          <i class="fas fa-palette"></i> Theme Customizer
+        </span>
+        <button class="aura-customizer-close" id="aura-customizer-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="aura-customizer-body">
+
+        <!-- Color Presets -->
+        <div class="aura-customizer-section">
+          <label class="aura-customizer-label">Color Presets</label>
+          <div class="aura-color-presets">
+            <button class="aura-color-swatch" data-color="blue"   title="Blue"   style="background:#2490ef;"></button>
+            <button class="aura-color-swatch" data-color="green"  title="Green"  style="background:#28a745;"></button>
+            <button class="aura-color-swatch" data-color="red"    title="Red"    style="background:#dc3545;"></button>
+            <button class="aura-color-swatch" data-color="orange" title="Orange" style="background:#fd7e14;"></button>
+            <button class="aura-color-swatch" data-color="yellow" title="Yellow" style="background:#ffc107;"></button>
+            <button class="aura-color-swatch" data-color="pink"   title="Pink"   style="background:#e83e8c;"></button>
+            <button class="aura-color-swatch" data-color="violet" title="Violet" style="background:#6f42c1;"></button>
+          </div>
+        </div>
+
+        <!-- Custom Color Picker -->
+        <div class="aura-customizer-section">
+          <label class="aura-customizer-label">Custom Color</label>
+          <div class="aura-custom-color-row">
+            <input type="color" id="aura-color-picker-input" class="aura-color-picker-input"
+                   value="{{ custom_color or '#2490ef' }}" title="Pick a color">
+            <input type="text" id="aura-hex-input" class="aura-hex-input"
+                   placeholder="#2490ef" maxlength="7"
+                   value="{{ custom_color or '' }}">
+            <button id="aura-eyedropper-btn" class="aura-eyedropper-btn" title="Pick color from screen">
+              <i class="fas fa-eye-dropper"></i>
+            </button>
+          </div>
+          <!-- RGB Sliders -->
+          <div class="aura-rgb-sliders">
+            <div class="aura-rgb-row">
+              <label>R</label>
+              <input type="range" id="aura-r-slider" min="0" max="255" value="36" class="aura-rgb-slider aura-r-slider">
+              <input type="number" id="aura-r-value" min="0" max="255" value="36" class="aura-rgb-value">
+            </div>
+            <div class="aura-rgb-row">
+              <label>G</label>
+              <input type="range" id="aura-g-slider" min="0" max="255" value="144" class="aura-rgb-slider aura-g-slider">
+              <input type="number" id="aura-g-value" min="0" max="255" value="144" class="aura-rgb-value">
+            </div>
+            <div class="aura-rgb-row">
+              <label>B</label>
+              <input type="range" id="aura-b-slider" min="0" max="255" value="239" class="aura-rgb-slider aura-b-slider">
+              <input type="number" id="aura-b-value" min="0" max="255" value="239" class="aura-rgb-value">
+            </div>
+          </div>
+          <button id="aura-apply-custom-color" class="aura-apply-btn">
+            <i class="fas fa-check"></i> Apply Color
+          </button>
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <div class="aura-customizer-section">
+          <label class="aura-customizer-label">Appearance</label>
+          <div class="aura-toggle-row">
+            <span>Dark Mode</span>
+            <label class="aura-toggle-switch">
+              <input type="checkbox" id="aura-dark-mode-toggle"
+                     {% if dark_theme == 'dark' %}checked{% endif %}>
+              <span class="aura-toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Apply Color To -->
+        <div class="aura-customizer-section">
+          <label class="aura-customizer-label">Apply Color To</label>
+          <div class="aura-toggle-row">
+            <span>Navbar</span>
+            <label class="aura-toggle-switch">
+              <input type="checkbox" id="aura-apply-navbar"
+                     {% if theme_settings.apply_on_navbar == '1' %}checked{% endif %}>
+              <span class="aura-toggle-slider"></span>
+            </label>
+          </div>
+          <div class="aura-toggle-row">
+            <span>Sidebar</span>
+            <label class="aura-toggle-switch">
+              <input type="checkbox" id="aura-apply-menu"
+                     {% if theme_settings.apply_on_menu == '1' %}checked{% endif %}>
+              <span class="aura-toggle-slider"></span>
+            </label>
+          </div>
+          <div class="aura-toggle-row">
+            <span>Workspace</span>
+            <label class="aura-toggle-switch">
+              <input type="checkbox" id="aura-apply-workspace"
+                     {% if theme_settings.apply_on_workspace == '1' %}checked{% endif %}>
+              <span class="aura-toggle-slider"></span>
+            </label>
+          </div>
+          <div class="aura-toggle-row">
+            <span>Dashboard</span>
+            <label class="aura-toggle-switch">
+              <input type="checkbox" id="aura-apply-dashboard"
+                     {% if theme_settings.apply_on_dashboard == '1' %}checked{% endif %}>
+              <span class="aura-toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+      </div><!-- /.aura-customizer-body -->
+
+      <div class="aura-customizer-footer">
+        <button id="aura-customizer-save" class="aura-save-btn">
+          <i class="fas fa-save"></i> Save Settings
+        </button>
+        <button id="aura-open-full-settings" class="aura-full-settings-btn">
+          <i class="fas fa-cog"></i> Full Settings
+        </button>
+      </div>
+    </div><!-- /#aura-customizer-panel -->
+
+    <div id="all-symbols" style="display:none"></div>
+    <div id="build-events-overlay"></div>
+
+    <script type="text/javascript">
+      const None = '';
+      window._version_number = "{{ build_version }}";
+      window.app     = true;
+      window.dev_server = {{ dev_server }};
+
+      if (!window.frappe) window.frappe = {};
+
+      frappe.boot          = JSON.parse({{ boot }});
+      frappe.theme_settings = {{ theme_settings }};
+      frappe._messages     = frappe.boot["__messages"];
+      frappe.csrf_token    = "{{ csrf_token }}";
+
+      // Store theme state for JS access
+      window.aura_state = {
+        dark_theme:    "{{ dark_theme }}",
+        theme_color:   "{{ theme_color }}",
+        custom_color:  "{{ custom_color }}",
+        is_custom:     {{ 'true' if is_custom_color else 'false' }}
+      };
+
+      {%- for path in include_icons -%}
+      fetch(`/assets/{{ path }}?v=${window._version_number}`, { credentials: "same-origin" })
+        .then((r) => r.text())
+        .then((svg) => {
+          document.getElementById("all-symbols")
+                  .insertAdjacentHTML("beforeend", svg);
+        });
+      {%- endfor -%}
+    </script>
+
+    {% for include in include_js %}
+    {{ include_script(include) }}
+    {% endfor %}
+
+    <script type="text/javascript"
+            src="/assets/aura_theme/js/aura_theme.js?ver={{ build_version }}"></script>
+
+    {% include "templates/includes/app_analytics/google_analytics.html" %}
+
+    {% for sound in (sounds or []) %}
+    <audio preload="auto" id="sound-{{ sound.name }}" volume={{ sound.volume or 1 }}>
+      <source src="{{ sound.src }}"></source>
+    </audio>
+    {% endfor %}
+  </body>
+</html>

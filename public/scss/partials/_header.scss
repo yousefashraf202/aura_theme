@@ -1,0 +1,200 @@
+/* ================================================================
+   Aura Theme — Navbar / Header
+================================================================ */
+
+/* Frappe's native navbar gets hidden — we use .dv-navbar (legacy) or .aura-navbar */
+.navbar.navbar-expand { display: none !important; }
+
+/* ---- Main Navbar ---- */
+.dv-navbar,
+.aura-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1040;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: var(--fg-color, #fff);
+  border-bottom: 1px solid var(--border-color, #e8e8e8);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  transition: background 0.2s, box-shadow 0.2s;
+
+  /* Left section: logo + toggle */
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* Center section: stretches */
+  .navbar-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  /* Right section */
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  /* ---- Logo ---- */
+  #aura-app-logo {
+    a { display: flex; align-items: center; }
+    img {
+      max-height: 36px;
+      max-width: 140px;
+      object-fit: contain;
+    }
+  }
+
+  /* ---- Toggle menu button ---- */
+  .btn-toggle-main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    color: inherit;
+    transition: background 0.15s;
+    &:hover { background: rgba(0,0,0,0.07); }
+    i { pointer-events: none; }
+  }
+
+  /* ---- Modules button ---- */
+  .btn-open-modules {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    color: inherit;
+    transition: background 0.15s, color 0.15s;
+    &:hover { background: rgba(0,0,0,0.07); }
+    &.active {
+      background: var(--primary, #2490ef);
+      color: #fff;
+    }
+  }
+
+  /* ---- User section ---- */
+  #header-navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    &:hover { background: rgba(0,0,0,0.06); }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--primary, #2490ef);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      .user-name { font-size: 13px; font-weight: 600; }
+      .user-type { font-size: 11px; color: var(--text-muted, #888); }
+    }
+  }
+
+  /* ---- Language switcher ---- */
+  #header-navbar-change-lang {
+    position: relative;
+
+    .dropdown-lang-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.15s;
+      &:hover { background: rgba(0,0,0,0.06); }
+    }
+
+    .dropdown-menu {
+      min-width: 110px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      border: 1px solid var(--border-color, #eee);
+      padding: 4px;
+    }
+
+    .dropdown-item {
+      border-radius: 7px;
+      font-size: 13px;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      &:hover { background: var(--primary-light, #eaf4fd); }
+    }
+  }
+}
+
+/* ---- Lang flags ---- */
+.aura-lang-flag {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  border-radius: 2px;
+  background: #ccc;
+  &.lang-en { background: #012169; }
+  &.lang-ar { background: #006C35; }
+}
+
+/* ---- Color on navbar ---- */
+.layout-navbar-color-style {
+  .dv-navbar,
+  .aura-navbar {
+    background: var(--primary, #2490ef) !important;
+    border-bottom-color: var(--primary, #2490ef) !important;
+    color: #fff !important;
+
+    .btn-toggle-main-menu,
+    .btn-open-modules,
+    .aura-nav-icon-btn {
+      color: #fff !important;
+      &:hover { background: rgba(255,255,255,0.15) !important; }
+    }
+
+    #header-navbar-change-lang .dropdown-lang-link { color: #fff !important; }
+    #header-navbar-user .user-info .user-type { color: rgba(255,255,255,0.75) !important; }
+  }
+}

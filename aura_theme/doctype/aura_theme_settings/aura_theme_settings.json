@@ -1,0 +1,262 @@
+{
+ "actions": [
+  {
+   "action": "frappe.sessions.clear",
+   "action_type": "Server Action",
+   "label": "Clear Cache"
+  }
+ ],
+ "allow_rename": 1,
+ "creation": "2021-12-25 17:07:18.673777",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "theme_layout_tab",
+  "dark_view",
+  "hide_language_icon",
+  "show_help_icon",
+  "theme_color",
+  "custom_color",
+  "theme_logo",
+  "favicon",
+  "loading_image",
+  "font_style_section",
+  "font_family",
+  "aura_theme_installed",
+  "side_menu_section",
+  "open_workspace_on_mobile_menu",
+  "show_icon_label",
+  "hide_icon_tooltip",
+  "always_close_sub_menu",
+  "menu_opening_type",
+  "login_page_section",
+  "login_page_logo",
+  "enable_background",
+  "background_type",
+  "full_page_background",
+  "transparent_background",
+  "background_photo",
+  "slideshow",
+  "layout_tab",
+  "apply_color_and_background_section",
+  "apply_on_navbar",
+  "apply_on_menu",
+  "apply_on_dashboard",
+  "apply_on_workspace"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "dark_view",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Dark View"
+  },
+  {
+   "default": "Blue",
+   "fieldname": "theme_color",
+   "fieldtype": "Select",
+   "label": "Color",
+   "options": "Blue\nGreen\nRed\nOrange\nYellow\nPink\nViolet\nCustom"
+  },
+  {
+   "depends_on": "eval:doc.theme_color=='Custom'",
+   "fieldname": "custom_color",
+   "fieldtype": "Color",
+   "label": "Custom Color (Hex)",
+   "description": "Pick any color using the color picker or enter a hex value. You can also use the eyedropper in the navbar quick settings."
+  },
+  {
+   "fieldname": "login_page_section",
+   "fieldtype": "Tab Break",
+   "label": "Login Page"
+  },
+  {
+   "fieldname": "background_type",
+   "fieldtype": "Select",
+   "label": "Background Type",
+   "options": "Single Photo\nSlideshow"
+  },
+  {
+   "depends_on": "eval:doc.background_type=='Single Photo'",
+   "fieldname": "background_photo",
+   "fieldtype": "Attach Image",
+   "label": "Background Photo"
+  },
+  {
+   "depends_on": "eval:doc.background_type=='Slideshow'",
+   "fieldname": "slideshow",
+   "fieldtype": "Table",
+   "label": "Slideshow",
+   "options": "Slideshow Photos"
+  },
+  {
+   "default": "0",
+   "fieldname": "full_page_background",
+   "fieldtype": "Check",
+   "label": "Full Page Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "transparent_background",
+   "fieldtype": "Check",
+   "label": "Transparent Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_background",
+   "fieldtype": "Check",
+   "label": "Enable Background"
+  },
+  {
+   "fieldname": "side_menu_section",
+   "fieldtype": "Tab Break",
+   "label": "Side Menu"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_icon_label",
+   "fieldtype": "Check",
+   "label": "Show Icon Label"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_icon_tooltip",
+   "fieldtype": "Check",
+   "label": "Hide Icon Tooltip"
+  },
+  {
+   "fieldname": "loading_image",
+   "fieldtype": "Attach Image",
+   "label": "Loading Image"
+  },
+  {
+   "fieldname": "theme_layout_tab",
+   "fieldtype": "Tab Break",
+   "label": "Theme Layout"
+  },
+  {
+   "default": "0",
+   "fieldname": "always_close_sub_menu",
+   "fieldtype": "Check",
+   "label": "Always Close Sub Menu"
+  },
+  {
+   "default": "Workspace",
+   "fieldname": "menu_opening_type",
+   "fieldtype": "Select",
+   "label": "Menu Opening Type",
+   "options": "Workspace\nDashboard"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_language_icon",
+   "fieldtype": "Check",
+   "label": "Hide Language Icon"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_help_icon",
+   "fieldtype": "Check",
+   "label": "Show Help Icon"
+  },
+  {
+   "description": "Choose your font <a href=\"https://fonts.google.com/\" target=\"_blank\">View Fonts</a>",
+   "fieldname": "font_style_section",
+   "fieldtype": "Section Break",
+   "label": "Font Style"
+  },
+  {
+   "default": "Cairo",
+   "fieldname": "font_family",
+   "fieldtype": "Select",
+   "label": "Font Family",
+   "options": "Roboto\nOpen Sans\nMontserrat\nLato\nPoppins\nInter\nRaleway\nNunito\nRubik\nWork Sans\nDM Sans\nIBM Plex Sans\nManrope\nSpace Grotesk\nPlus Jakarta Sans\nOutfit\nSora\nBe Vietnam Pro\nUrbanist\nCairo\nTajawal\nAmiri\nNoto Sans Arabic\nChanga\nEl Messiri\nNoto Naskh Arabic\nAlmarai\nIBM Plex Sans Arabic\nMada\nReadex Pro\nHeebo\nAssistant\nVazirmatn\nQuicksand\nKarla\nJosefin Sans\nMulish\nCabin\nSource Sans Pro\nLibre Franklin\nNoto Sans\nOxygen\nAbel\nSecular One\nBebas Neue\nFjalla One\nOswald\nPlayfair Display\nMerriweather\nLora\nSource Serif Pro\nPT Serif\nArvo\nCrimson Text\nEB Garamond\nRoboto Slab\nNoto Serif\nLibre Baskerville\nBitter\nRoboto Mono\nSource Code Pro\nInconsolata\nFira Code\nJetBrains Mono\nSpace Mono\nIBM Plex Mono\nCourier Prime"
+  },
+  {
+   "default": "0",
+   "fieldname": "open_workspace_on_mobile_menu",
+   "fieldtype": "Check",
+   "label": "Open Workspace On Mobile Menu"
+  },
+  {
+   "fieldname": "login_page_logo",
+   "fieldtype": "Attach Image",
+   "label": "Login Page Logo"
+  },
+  {
+   "fieldname": "theme_logo",
+   "fieldtype": "Attach Image",
+   "label": "Theme Logo"
+  },
+  {
+   "fieldname": "layout_tab",
+   "fieldtype": "Tab Break",
+   "label": "Layout"
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_on_menu",
+   "fieldtype": "Check",
+   "label": "Apply on Menu"
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_on_dashboard",
+   "fieldtype": "Check",
+   "label": "Apply on Dashboard"
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_on_workspace",
+   "fieldtype": "Check",
+   "label": "Apply on Workspace"
+  },
+  {
+   "fieldname": "apply_color_and_background_section",
+   "fieldtype": "Section Break",
+   "label": "Apply Color and Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_on_navbar",
+   "fieldtype": "Check",
+   "label": "Apply on Navbar"
+  },
+  {
+   "fieldname": "favicon",
+   "fieldtype": "Attach Image",
+   "label": "Favicon"
+  },
+  {
+   "default": "0",
+   "fieldname": "aura_theme_installed",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Aura Theme Installed"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-05-30 15:53:15.474962",
+ "modified_by": "Administrator",
+ "module": "Aura Theme",
+ "name": "Aura Theme Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,67 @@
+<!--
+Aura Theme — Login Page
+-->
+<!DOCTYPE html>
+<html lang="{{ frappe.local.lang or 'en' }}"
+      dir="{{ 'rtl' if frappe.local.lang == 'ar' else 'ltr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ _("Login") }} | Aura Theme</title>
+
+  <link rel="shortcut icon"
+        href="{{ context.favicon or '/assets/aura_theme/images/datavlue-new-icon-xs.png' }}"
+        type="image/x-icon">
+
+  {% for css in web_include_css %}
+  <link rel="stylesheet" href="/{{ css }}">
+  {% endfor %}
+</head>
+
+<body id="page-login" class="aura-login-page">
+
+  <div class="page_content login-content min-background">
+
+    <div class="login-form-wrapper">
+      <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+          <a href="/">
+            <img src="{{ context.logo }}" alt="Aura Theme Logo" />
+          </a>
+        </div>
+
+        <!-- App name -->
+        {% if context.app_name %}
+        <h1 class="login-app-name">{{ context.app_name }}</h1>
+        {% endif %}
+
+        <!-- Frappe's native login form is rendered here -->
+        {% include "templates/includes/login/login.html" %}
+
+        <!-- Social login -->
+        {% if context.social_login %}
+        <div class="social-login-buttons">
+          {% for p in context.provider_logins %}
+          <a href="{{ p.auth_url }}" class="btn btn-social-login">
+            {% if p.icon %}{{ p.icon }}{% endif %}
+            {{ _("Continue with") }} {{ p.provider_name }}
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div><!-- /.login-card -->
+    </div><!-- /.login-form-wrapper -->
+
+  </div><!-- /.page_content -->
+
+  {% for js in web_include_js %}
+  <script src="/{{ js }}"></script>
+  {% endfor %}
+
+  {% include "templates/includes/login/login.js" %}
+
+</body>
+</html>

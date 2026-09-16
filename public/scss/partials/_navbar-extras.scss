@@ -1,0 +1,134 @@
+/* ================================================================
+   Aura Theme — Navbar Extra Buttons
+   (Dark Mode, Full Width, Theme Customizer, Enhanced Search)
+================================================================ */
+
+/* ---- Navbar extra icons wrapper ---- */
+.aura-navbar-extras {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 8px;
+
+  .aura-nav-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    font-size: 15px;
+    position: relative;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.07);
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: var(--primary, #2490ef);
+      color: #fff;
+    }
+
+    i { pointer-events: none; }
+  }
+}
+
+/* ---- Enhanced Search Bar ---- */
+.aura-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .aura-search-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 15px;
+    color: inherit;
+    transition: background 0.18s;
+    &:hover { background: rgba(0,0,0,0.07); }
+  }
+
+  .aura-search-box {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: right center;
+    width: 0;
+    overflow: hidden;
+    background: var(--fg-color, #fff);
+    border: 1.5px solid var(--border-color, #ddd);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    transition: width 0.25s cubic-bezier(.4,0,.2,1),
+                transform 0.25s cubic-bezier(.4,0,.2,1);
+    z-index: 1000;
+
+    .aura-search-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 6px 10px;
+      font-size: 13px;
+      width: 100%;
+      color: var(--text-color, #333);
+      font-family: inherit;
+    }
+
+    .aura-search-close {
+      padding: 0 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-muted, #888);
+      background: none;
+      border: none;
+      &:hover { color: var(--text-color, #333); }
+    }
+  }
+
+  &.aura-search-expanded {
+    .aura-search-box {
+      width: 260px;
+      transform: translateY(-50%) scaleX(1);
+    }
+  }
+}
+
+/* Keyboard shortcut hint */
+.aura-search-shortcut {
+  display: inline-block;
+  font-size: 10px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 4px;
+  color: var(--text-muted, #888);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Dark mode adjustments for search */
+[data-theme="dark"] {
+  .aura-search-wrapper .aura-search-box {
+    background: var(--sidebar-bg, #1e1e2d);
+    border-color: rgba(255,255,255,0.12);
+    .aura-search-input { color: #eee; }
+  }
+  .aura-navbar-extras .aura-nav-icon-btn:hover {
+    background: rgba(255,255,255,0.1);
+  }
+}
